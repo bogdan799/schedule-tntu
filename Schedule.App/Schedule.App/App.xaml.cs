@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Schedule.App.Services;
 using Schedule.App.Views;
+using Xamarin.Essentials;
 
 namespace Schedule.App
 {
@@ -14,7 +15,16 @@ namespace Schedule.App
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+            Preferences.Clear();
+
+            if (Preferences.ContainsKey("group_id"))
+            {
+                MainPage = new AppShell();
+            }
+            else
+            {
+                MainPage = new FirstPage();
+            }
         }
 
         protected override void OnStart()

@@ -41,10 +41,16 @@ namespace Schedule.App.ViewModels
             return true;
         }
 
+        protected virtual void DoOnPropertyChanged(string propertyName)
+        {
+
+        }
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
+            DoOnPropertyChanged(propertyName);
             var changed = PropertyChanged;
             if (changed == null)
                 return;

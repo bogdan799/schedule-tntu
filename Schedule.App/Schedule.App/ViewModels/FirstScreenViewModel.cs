@@ -6,19 +6,18 @@ using Xamarin.Forms;
 
 namespace Schedule.App.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public class FirstScreenViewModel : BaseViewModel
     {
         public Command LoginCommand { get; }
 
-        public LoginViewModel()
+        public FirstScreenViewModel()
         {
             LoginCommand = new Command(OnLoginClicked);
         }
 
         private async void OnLoginClicked(object obj)
         {
-            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-            await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+            await App.Current.NavigationProxy.PushModalAsync(new ScheduleConfigurationPage(), true);
         }
     }
 }

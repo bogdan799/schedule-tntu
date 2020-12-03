@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Schedule.App.ViewModels;assembly=Schedule.App"
+             x:Class="Schedule.App.Views.ScheduleConfigurationPage">
+    <ContentPage.BindingContext>
+        <viewModels:ScheduleConfigurationPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid HorizontalOptions="Fill"
+              Margin="50,0"
+              VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Picker Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalOptions="Fill"
+                    Title="Факультет"
+                    ItemsSource="{Binding Faculties}"
+                    ItemDisplayBinding="{Binding ShortName}"
+                    SelectedItem="{Binding SelectedFaculty, Mode=TwoWay}"></Picker>
+
+            <Picker Grid.Row="2"
+                    Grid.Column="1"
+                    Title="Курс"
+                    HorizontalOptions="Fill"
+                    ItemsSource="{Binding Courses}"
+                    ItemDisplayBinding="{Binding CourseName}"
+                    SelectedItem="{Binding SelectedCourse, Mode=TwoWay}"></Picker>
+
+            <Picker Grid.Row="3"
+                    Grid.Column="1"
+                    Title="Група"
+                    HorizontalOptions="Fill"
+                    ItemsSource="{Binding FilteredGroups}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"></Picker>
+
+            <Button Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Center"
+                    Command="{Binding SaveCommand}"
+                    Text="Зберегти"
+                    Margin="0,30,0,0"
+                    Padding="30,0"></Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
