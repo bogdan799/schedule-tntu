@@ -21,6 +21,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <Image></Image>
             <Picker Grid.Row="1"
                     Grid.Column="1"
                     HorizontalOptions="Fill"
