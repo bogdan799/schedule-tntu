@@ -88,37 +88,48 @@
         </DataTemplate>
     </views:MvxContentPage.Resources>
     <ContentPage.Content>
-        <CarouselView HorizontalOptions="FillAndExpand"
-                      VerticalOptions="FillAndExpand"
-                      ItemsSource="{Binding LessonDays}">
-            <CarouselView.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:LessonDay">
-                    <StackLayout>
-                        <StackLayout></StackLayout>
-                        <Label HorizontalTextAlignment="Center"
-                               Margin="0,10,0,0"
-                               FontSize="16">
-                            <Label.Text>
-                                <MultiBinding StringFormat="{}{0} - {1}">
-                                    <Binding Path="Day"/>
-                                    <Binding Path="WeekMode" Converter="{StaticResource WeekModeConverter}"/>
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
-                        <CollectionView ItemsSource="{Binding Lessons}"
-                                        HorizontalOptions="FillAndExpand"
-                                        Margin="5"
-                                        ItemTemplate="{StaticResource LessonTemplate}"
-                                        HorizontalScrollBarVisibility="Default">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout ItemSpacing="10"
-                                                   Orientation="Vertical">
-                                </LinearItemsLayout>
-                            </CollectionView.ItemsLayout>
-                        </CollectionView>
-                    </StackLayout>
-                </DataTemplate>
-            </CarouselView.ItemTemplate>
-        </CarouselView>
+        <StackLayout>
+            <CarouselView HorizontalOptions="FillAndExpand"
+                          VerticalOptions="Fill"
+                          IndicatorView="LessonDaysIndicator"
+                          ItemsSource="{Binding LessonDays}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:LessonDay">
+                        <StackLayout>
+                            <StackLayout></StackLayout>
+                            <Label HorizontalTextAlignment="Center"
+                                   Margin="0,10,0,0"
+                                   FontSize="16">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                        <Binding Path="Day" />
+                                        <Binding Path="WeekMode"
+                                                 Converter="{StaticResource WeekModeConverter}" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                            <CollectionView ItemsSource="{Binding Lessons}"
+                                            HorizontalOptions="FillAndExpand"
+                                            Margin="5"
+                                            ItemTemplate="{StaticResource LessonTemplate}"
+                                            HorizontalScrollBarVisibility="Default">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout ItemSpacing="10"
+                                                       Orientation="Vertical">
+                                    </LinearItemsLayout>
+                                </CollectionView.ItemsLayout>
+                            </CollectionView>
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="LessonDaysIndicator"
+                           IndicatorColor="LightGray"
+                           SelectedIndicatorColor="DarkGray"
+                           IndicatorsShape="Circle"
+                           IndicatorSize="6"
+                           Margin="0,0,0,20"
+                           ItemsSource="{Binding LessonDays}"/>
+        </StackLayout>
     </ContentPage.Content>
 </views:MvxContentPage>
