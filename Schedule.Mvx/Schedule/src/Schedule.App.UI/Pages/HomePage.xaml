@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage x:TypeArguments="viewModels:HomeViewModel"
+                      xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+                      xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
+                      xmlns:local="clr-namespace:Schedule.App.UI.Pages"
+                      x:Class="Schedule.App.UI.Pages.HomePage"
+                      xmlns:viewModels="clr-namespace:Schedule.App.Core.ViewModels.Home;assembly=Schedule.App.Core"
+                      xmlns:viewModels1="clr-namespace:Schedule.App.Core.ViewModels;assembly=Schedule.App.Core"
+                      xmlns:converters="clr-namespace:Schedule.App.UI.Converters;assembly=Schedule.App.UI"
+                      xmlns:system="clr-namespace:System;assembly=netstandard"
+                      BackgroundColor="#EFEFEF"
+                      x:DataType="viewModels:HomeViewModel">
+    <views:MvxContentPage.Title>
+        <MultiBinding StringFormat="{}Розклад - група {0}">
+            <Binding Path="Group.Name"/>
+        </MultiBinding>
+    </views:MvxContentPage.Title>
+    <views:MvxContentPage.Resources>
+        <converters:SubGroupConverter x:Key="SubGroupConverter" />
+        <converters:WeekModeConverter x:Key="WeekModeConverter" />
+
+        <DataTemplate x:Key="LessonTemplate" x:DataType="viewModels1:LessonViewModel">
+            <Grid BackgroundColor="White">
+
+                <Grid BackgroundColor="White"
+                      RowSpacing="5"
+                      HorizontalOptions="Fill">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <BoxView Grid.Column="0"
+                             BackgroundColor="{Binding AccentColor}" />
+
+                    <Label Grid.Column="1"
+                           VerticalOptions="Fill"
+                           HorizontalOptions="Fill"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"
+                           Text="{Binding Lesson.Number}"
+                           FontSize="Large"></Label>
+
+                    <StackLayout Grid.Column="2"
+                                 Grid.Row="0"
+                                 Spacing="0"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 Orientation="Vertical">
+
+                        <Label TextColor="DimGray"
+                               FontSize="14"
+                               Text="{Binding TimeSlotFrom}" />
+                        <Label VerticalOptions="Center"
+                               TextColor="DimGray"
+                               FontSize="14"
+                               Text="-"
+                               HorizontalOptions="Center" />
+                        <Label TextColor="DimGray"
+                               FontSize="14"
+                               Text="{Binding TimeSlotTo}" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Column="3"
+                                 Margin="5, 8"
+                                 Spacing="3">
+
+                        <Label TextColor="Black"
+                               FontSize="14"
+                               Text="{Binding Lesson.Name}" />
+
+                        <Label FontSize="12"
+                               Text="{Binding Lesson.GroupMode, Converter={StaticResource SubGroupConverter}}"></Label>
+
+                        <Label Text="{Binding Lesson.Type}"
+                               FontSize="12"></Label>
+                        <Label Text="{Binding Lesson.Location}"
+                               FontSize="12"></Label>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+
+
+        </DataTemplate>
+    </views:MvxContentPage.Resources>
+    <ContentPage.Content>
+        <CarouselView HorizontalOptions="FillAndExpand"
+                      VerticalOptions="FillAndExpand"
+                      ItemsSource="{Binding LessonDays}">
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:LessonDay">
+                    <StackLayout>
+                        <StackLayout></StackLayout>
+                        <Label HorizontalTextAlignment="Center"
+                               Margin="0,10,0,0"
+                               FontSize="16">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} - {1}">
+                                    <Binding Path="Day"/>
+                                    <Binding Path="WeekMode" Converter="{StaticResource WeekModeConverter}"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <CollectionView ItemsSource="{Binding Lessons}"
+                                        HorizontalOptions="FillAndExpand"
+                                        Margin="5"
+                                        ItemTemplate="{StaticResource LessonTemplate}"
+                                        HorizontalScrollBarVisibility="Default">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="10"
+                                                   Orientation="Vertical">
+                                </LinearItemsLayout>
+                            </CollectionView.ItemsLayout>
+                        </CollectionView>
+                    </StackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+    </ContentPage.Content>
+</views:MvxContentPage>

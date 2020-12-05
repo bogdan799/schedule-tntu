@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
@@ -36,7 +37,7 @@ namespace Schedule.DataParser.Parsers
             var currentRow = 0;
             foreach (var row in document.QuerySelectorAll("#ScheduleWeek > tbody > tr"))
             {
-                var cells = row.QuerySelectorAll("td").Where(td => td.ClassName != "LessonNumber").ToArray();
+                var cells = row.QuerySelectorAll("td").Where(td => td.ClassName == null || !td.ClassName.StartsWith("LessonNumber")).ToArray();
                 var currentCol = 0;
                 foreach (var cell in cells)
                 {
@@ -57,9 +58,14 @@ namespace Schedule.DataParser.Parsers
                         lesson.WeekMode = _weeksDictionary[currentRow];
                         lesson.Number = _rowDictionary[currentRow];
 
-                        if (lesson.WeekMode == WeekMode.FirstWeek && rowspan == 2)
+                        if (lesson.WeekMode == WeekMode.FirstWeek && rowspan > 1)
                         {
                             lesson.WeekMode = WeekMode.AllWeeks;
+                        }
+
+                        if (lesson.GroupMode == GroupMode.FirstGroup && colspan == _columnDictionary.Values.Count(v => v == lesson.Day))
+                        {
+                            lesson.GroupMode = GroupMode.AllGroups;
                         }
 
                         list.Add(lesson);
@@ -166,6 +172,10 @@ namespace Schedule.DataParser.Parsers
         {
             var divs = element.QuerySelectorAll("div");
 
+            if (divs.Length < 2)
+            {
+                Debugger.Break();
+            }
             var firstDiv = divs[0];
             var secondDiv = divs[1];
 

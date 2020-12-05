@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage x:TypeArguments="viewModels:HelloViewModel"
+                      xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+                      xmlns:viewModels="clr-namespace:Schedule.App.Core.ViewModels;assembly=Schedule.App.Core"
+                      x:Class="Schedule.App.UI.Pages.HelloPage" 
+                      x:DataType="viewModels:HelloViewModel">
+    <ContentPage.Content>
+        <StackLayout Padding="10,0,10,0"
+                     VerticalOptions="Center">
+            <Label HorizontalOptions="Center"
+                   FontSize="25">Вітаю!</Label>
+            <Label HorizontalOptions="Center"
+                   Margin="0,10,0,0"
+                   HorizontalTextAlignment="Center"
+                   FontSize="15">У цьому додатку ти зможеш отримати актуальний розклад занять</Label>
+            <Button Margin="0,10,0,0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Padding="30,0"
+                    Text="Почати!"
+                    Command="{Binding StartCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>
